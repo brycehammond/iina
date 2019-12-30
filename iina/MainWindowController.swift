@@ -1245,6 +1245,12 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
 
   /** A method being called when window open. Pretend to be a window delegate. */
   func windowDidOpen() {
+    // force redraw to clear any lingering content in the
+    // video layer if the view is being recycled
+    if loaded {
+      videoView.videoLayer.draw(forced: true)
+    }
+    // show and make active the window
     window!.makeMain()
     window!.makeKeyAndOrderFront(nil)
     resetCollectionBehavior()
